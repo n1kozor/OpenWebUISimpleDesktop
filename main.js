@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+
+// Ignore self-signed or invalid SSL certificates
+app.commandLine.appendSwitch('ignore-certificate-errors');
 // --- LOAD config.json ---
 const configPath = path.join(__dirname, 'config.json');
 let config;
