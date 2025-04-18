@@ -10,6 +10,14 @@
     "dist": "electron-builder"
   },
   "build": {
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "index.html",
+      "styles/**/*",
+      "assets/**/*"
+    ],
     "appId": "com.openwebuisimpledesktop.desktop",
     "productName": "OpenwebuiSimpleDesktop",
     "icon": "assets/ico.ico",

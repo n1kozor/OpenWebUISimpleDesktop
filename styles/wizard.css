@@ -1,0 +1,122 @@
+#wizard-overlay {
+    position: absolute;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: #fff;
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    transition: opacity 0.45s cubic-bezier(.45,1.7,.45,1);
+}
+
+.wizard-next {
+    display: block;
+    margin: 24px auto 0 auto;
+    background: #181818;
+    color: #fff;
+    border: none;
+    border-radius: 99px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 12px 38px;
+    box-shadow: 0 2px 12px #0001;
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s, opacity 0.19s;
+    opacity: 0.97;
+    letter-spacing: 0.03em;
+}
+.wizard-next:disabled {
+    background: #ededed;
+    color: #bbb;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+#wizardStepReady {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wizard-inner {
+    background: #fff;
+    color: #181818;
+    min-width: 320px;
+    padding: 38px 32px 32px 32px;
+    border-radius: 22px;
+    box-shadow: 0 2px 32px 0 #0002;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    animation: fadeinWizard 0.6s cubic-bezier(.45,1.7,.45,1);
+}
+@keyframes fadeinWizard {
+    from { opacity: 0; transform: scale(.98);}
+    to   { opacity: 1; transform: scale(1);}
+}
+.wizard-label {
+    font-size: 1.07rem;
+    color: #181818;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    text-align: center;
+}
+.wizard-input {
+    border: 2px solid #e2e2e2;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 1.18rem;
+    width: 270px;
+    background: #fafafa;
+    color: #181818;
+    font-weight: 600;
+    box-shadow: 0 1px 8px #0001;
+}
+.wizard-input:focus {
+    border-color: #181818;
+    outline: none;
+    background:#fff;
+}
+.wizard-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #181818;
+    border: none;
+    border-radius: 50%;
+    margin: 18px auto 0 auto;
+    width: 48px; height: 48px;
+    font-size: 2.0rem;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.96;
+    box-shadow: 0 2px 12px #0001;
+    transition: background 0.14s, color 0.14s, opacity 0.19s;
+}
+.wizard-arrow:disabled {
+    background: #f2f2f2;
+    color: #bbb;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.wizard-btn {
+    margin-top: 12px;
+    border-radius: 99px;
+    padding: 14px 38px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: none;
+    background: #181818;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 14px #0001;
+    transition: background 0.12s, color 0.12s, opacity 0.21s;
+}
+.wizard-btn:active {
+    background: #474747;
+    color: #fff;
+    opacity: 0.87;
+}

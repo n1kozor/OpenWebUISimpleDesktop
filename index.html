@@ -1,118 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>OpenwebuiSimpleDesktop</title>
-    <style>
-        html, body {
-            width: 100vw; height: 100vh;
-            margin: 0; padding: 0; border: none;
-            background: #fff;
-            font-family: Arial, sans-serif;
-            color: #181818;
-            overflow: hidden;
-            user-select: none;
-        }
-        #preloader {
-            position: absolute;
-            left: 0; top: 0; width: 100vw; height: 100vh;
-            background: #fff;
-            z-index: 10000;
-            display: flex;
-            align-items: center; justify-content: center;
-            transition: opacity 0.45s cubic-bezier(.45,1.7,.45,1);
-        }
-        #preloader-text {
-            font-size: 2.7rem;
-            font-weight: 700;
-            color: #181818;
-            letter-spacing: 0.01em;
-            animation: pulsateTxt 2.1s ease-in-out infinite;
-            max-width: 90vw;
-            text-align: center;
-            line-height: 1.1;
-        }
-        @keyframes pulsateTxt {
-            0%   { transform: scale(1); opacity: 1;}
-            45%  { transform: scale(1.12); opacity: 0.8;}
-            100% { transform: scale(1); opacity: 1;}
-        }
-        #preloader.preloader-fade {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .webview-wrap {
-            position: absolute;
-            left: 0; top: 0; right: 0; bottom: 0;
-            width: 100vw; height: 100vh;
-            border-radius: 16px;
-            background: #fff;
-            overflow: hidden;
-        }
-        webview {
-            width: 100vw; height: 100vh;
-            border: none;
-            border-radius: 16px;
-            background: #fff;
-            -webkit-app-region: no-drag;
-        }
-        .drag-overlay {
-            position: absolute;
-            left: 0; top: 0;
-            width: 100vw;
-            height: 15px;
-            z-index: 150;
-            -webkit-app-region: drag;
-            background: transparent;
-            pointer-events: auto;
-        }
-        .webview-wrap, webview {
-            border-radius: 0px;
-        }
-        .window-buttons {
-            position: absolute;
-            top: 10px;
-            z-index: 200;
-            background: none;
-            -webkit-app-region: no-drag;
-            display: flex;
-            gap: 10px;
-        }
-        .window-buttons-left {
-            left: 10px;
-            right: auto;
-            flex-direction: row;
-        }
-        .window-buttons-right {
-            right: 10px;
-            left: auto;
-            flex-direction: row-reverse;
-        }
-        .window-btn {
-            width: 12px; height: 12px;
-            border-radius: 50%; border: none; outline: none;
-            opacity: 0.88; cursor: pointer; transition: opacity 0.2s;
-            box-shadow: none;
-        }
-        .window-btn:active { opacity: 1; }
-        .btn-close { background: #f45c5c; }
-        .btn-min { background: #fdbc40; }
-        .btn-max { background: #37cd4c; }
-    </style>
+  <meta charset="utf-8">
+  <title>OpenwebuiSimpleDesktop</title>
+  <link rel="stylesheet" href="styles/app.css">
+  <link rel="stylesheet" href="styles/wizard.css">
 </head>
 <body>
-<div id="preloader">
-    <span id="preloader-text">OpenWebUISimpleDesktop</span>
+<!-- Wizard overlay -->
+<div id="wizard-overlay" style="display:none">
+  <form class="wizard-inner" id="wizardForm" autocomplete="off" onsubmit="return false;">
+    <div id="wizardStepAppName">
+      <div class="wizard-label">Application name</div>
+      <input class="wizard-input" id="appNameInput" maxlength="48" placeholder="e.g. MyWebUI" required autocomplete="off" autofocus>
+      <button class="wizard-next" type="button" id="nextToUrl" title="Next" disabled>Next</button>
+    </div>
+    <div id="wizardStepAppUrl" style="display:none">
+      <div class="wizard-label">Server URL</div>
+      <input class="wizard-input" id="webuiUrlInput" maxlength="256" placeholder="e.g. http://localhost:8080/" required autocomplete="off" value="http://localhost:8080">
+      <button class="wizard-next" type="button" id="nextToReady" title="Next" disabled>Next</button>
+    </div>
+    <div id="wizardStepReady" style="display:none;text-align:center">
+      <div class="wizard-label" id="wizardReadyLabel" style="margin-bottom:18px; text-align:center; width:100%;">Ready! Start the application.</div>
+      <button class="wizard-btn" id="wizardStartBtn" type="submit" style="margin:auto;display:block;">Start</button>
+    </div>
+    <div id="wizard-error" style="color:#b00; font-size:1rem; margin-bottom:10px; display:none;text-align:center"></div>
+  </form>
 </div>
-<div class="webview-wrap">
-    <webview id="webview" src="" allowpopups></webview>
+
+<!-- App UI -->
+<div id="preloader">
+  <span id="preloader-text">OpenWebUISimpleDesktop</span>
+</div>
+<div class="webview-wrap" id="webviewWrap">
+  <webview id="webview" src="" allowpopups></webview>
 </div>
 <div class="drag-overlay"></div>
-<div class="window-buttons">
-    <button class="window-btn btn-close" title="Close"></button>
-    <button class="window-btn btn-min" title="Minimize"></button>
-    <button class="window-btn btn-max" title="Maximize"></button>
+<div class="window-buttons window-buttons-right">
+  <button class="window-btn btn-close" title="Close"></button>
+  <button class="window-btn btn-min" title="Minimize"></button>
+  <button class="window-btn btn-max" title="Maximize"></button>
 </div>
+
+<div id="connection-error-message" style="display:none">
+  <div class="connection-error-inner">
+    <div class="connection-error-title">Connection error</div>
+    <div class="connection-error-details">
+      Please check your <b>config.json</b> settings.<br>
+      Is the server address and port correct?<br>
+      Is your server running?
+    </div>
+    <button id="connection-error-refresh" class="connection-error-refresh">Refresh</button>
+  </div>
+</div>
+
 <script src="renderer.js"></script>
 </body>
 </html>
