@@ -1,3 +1,7 @@
+
+
+![Screenshot 2025-04-18 193738](https://github.com/user-attachments/assets/1fe084f2-9270-41bc-8df3-95d4a627f3df)
+
 # OpenWebUISimpleDesktop
 
 **OpenWebUISimpleDesktop** is a minimal, modern Electron-based desktop wrapper for [OpenWebUI](https://github.com/open-webui/open-webui). This app provides a native desktop experience for OpenWebUI, with native window controls and seamless integration.
