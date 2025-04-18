@@ -51,7 +51,8 @@ All application settings are managed in the `config.json` file in the project ro
 "bgColor": "#101014",
 "borderRadius": 16,
 "profileNavOffset": 5,
-"sidebarOffset": 15,
+"sidebarOffset": 15, 
+  "windowButtons": "right", //or "left" for Mac/Ubuntu Style
 "window": { "width": 1200, "height": 800, "minWidth": 500, "minHeight": 400 }
 }
 ```
@@ -60,6 +61,23 @@ All application settings are managed in the `config.json` file in the project ro
 - Make sure your icon files exist at the paths given in `iconDarwin` and `iconWin`, or adjust as needed.
 
 ---
+## DOM Manipulation Fine-Tuning
+
+In config.json:
+
+```json
+"profileNavOffset": 5, //Change this 10-15
+"sidebarOffset": 15, //Change this 10-15
+"windowButtons": "right", //or "left" for Mac/Ubuntu Style
+```
+![img_1.png](img_1.png)
+
+
+# Preloader
+
+
+## The Text for the Preloader is your App-Name in config.json
+![img_2.png](img_2.png)
 
 ## Usage
 
