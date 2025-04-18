@@ -1,0 +1,38 @@
+{
+  "name": "openwebuisimpledesktop",
+  "productName": "OpenwebUISimpleDesktop",
+  "version": "1.0.0",
+  "description": "OpenwebUI-SimpleDesktop",
+  "author": "N1kozor",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.openwebuisimpledesktop.desktop",
+    "productName": "OpenwebuiSimpleDesktop",
+    "icon": "assets/ico.ico",
+    "win": {
+      "icon": "assets/ico.ico",
+      "target": [ "nsis", "portable" ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "icon": "assets/icns.icns",
+      "category": "public.app-category.productivity"
+    }
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.0"
+  }
+}
