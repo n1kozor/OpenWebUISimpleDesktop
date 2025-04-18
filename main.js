@@ -48,13 +48,12 @@ function createMainWindow() {
       <head>
         <meta charset="utf-8">
         <title>${config.appName}</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <style>
           html, body {
             width: 100vw; height: 100vh;
             margin: 0; padding: 0; border: none;
             background: ${config.bgColor};
-            font-family: 'Inter', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             color: #fff;
             overflow: hidden;
             user-select: none;
