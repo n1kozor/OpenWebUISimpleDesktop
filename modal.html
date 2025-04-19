@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Select Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="modal.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="gpt-modal-wrap">
+    <div class="gpt-modal">
+        <h2 class="gpt-title">Start a New Chat</h2>
+        <form id="start-chat-form" autocomplete="off">
+            <div class="gpt-field">
+                <label for="model-select" class="gpt-label">Model</label>
+                <div class="gpt-select-wrap">
+                    <input type="text" id="model-search" class="gpt-dropdown-input" placeholder="Search models..." autocomplete="off" />
+                    <div id="dropdown-arrow" class="gpt-dropdown-arrow">&#9662;</div>
+                    <ul id="model-dropdown" class="gpt-dropdown-list"></ul>
+                    <div id="model-loader" class="gpt-loader"></div>
+                </div>
+            </div>
+
+            <div class="gpt-field">
+                <label for="initial-message" class="gpt-label">Initial Message</label>
+                <input id="initial-message" name="initial-message" type="text" placeholder="How can I help you today?" class="gpt-message-input" />
+            </div>
+
+            <div id="modal-error" class="gpt-error"></div>
+
+            <div class="gpt-actions">
+                <button type="button" class="gpt-btn gpt-cancel-btn" id="btn-cancel">Cancel</button>
+                <button type="submit" class="gpt-btn gpt-start-btn" id="btn-start-chat" disabled>Start Chat</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="modal.js"></script>
+</body>
+</html>
