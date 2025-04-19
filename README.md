@@ -44,28 +44,33 @@ It provides a native desktop experience with native window controls and seamless
 
 ## Configuration
 
-All settings are stored in `config.json` **next to the executable** after the first run wizard completes.  
-You can edit this file manually anytime to change app settings.
+All settings are stored in `config.json` under the user data directory:
+- Windows: `%AppData%\<AppName>\config.json`
+- macOS: `~/Library/Application Support/<AppName>/config.json`
+- Linux: `~/.config/<AppName>/config.json`
 
 ### Example `config.json` content:
 
 ```json
 {
-  "appName": "OpenwebuiSimpleDesktop",
   "iconDarwin": "assets/icons.icns",
   "iconWin": "assets/ico.ico",
-  "webuiUrl": "http://localhost:8080/",
   "bgColor": "#fff",
   "borderRadius": 0,
   "profileNavOffset": 15,
   "sidebarOffset": 15,
+  "apiToken": "your_openwebui_api_key",
   "windowButtons": "right",
   "window": {
     "width": 1200,
     "height": 800,
     "minWidth": 500,
     "minHeight": 400
-  }
+  },
+  "appName": "YourAppName",
+  "webuiUrl": "http://localhost:8000",
+  "preloaderTheme": "dark", //or light
+  "opacity": 1
 }
 ```
 
