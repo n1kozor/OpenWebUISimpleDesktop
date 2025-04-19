@@ -18,6 +18,10 @@ It provides a native desktop experience with native window controls and seamless
 - Displays a connection error message with retry button if the server is unreachable
 - Cross-platform support: Windows and macOS
 - Easy development with Node.js and Electron
+- Crtl + Shift + Space Short. Open a Chat Modal
+
+
+![Screenshot 2025-04-19 182011](https://github.com/user-attachments/assets/93315595-d5d7-4eee-80af-68f5cde0f515)
 
 ---
 
