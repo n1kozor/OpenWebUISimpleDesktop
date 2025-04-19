@@ -1,3 +1,6 @@
+![Screenshot 2025-04-18 193738](https://github.com/user-attachments/assets/b362b4b3-5c77-4123-8995-0323e588103e)
+
+
 # OpenWebUISimpleDesktop
 
 **OpenWebUISimpleDesktop** is a minimal, modern Electron desktop wrapper for [OpenWebUI](https://github.com/open-webui/open-webui).  
@@ -80,7 +83,21 @@ Typical values range from 10 to 20 depending on your theme and UI.
 
 ---
 
-## First Launch Setup Wizard
+# First Launch Setup Wizard
+## Enter the Application Name 
+![Screenshot 2025-04-19 015513](https://github.com/user-attachments/assets/d699195c-5f50-4ad2-9971-381d41b51aab)
+
+## Enter the OpenWebUI Server URL (defaults to `http://localhost:8080`)  
+![Screenshot 2025-04-19 015525](https://github.com/user-attachments/assets/7ea2ea5f-e192-49e1-8768-a123ac05eaa6)
+
+## Click Start to save and launch the app 
+![Screenshot 2025-04-19 015534](https://github.com/user-attachments/assets/42852644-d4a2-495c-960c-83e542fe7acc)
+
+
+
+
+
+
 
 On first launch, a simple, clean wizard appears asking you to:  
 - Enter the Application Name  
@@ -95,6 +112,9 @@ On first launch, a simple, clean wizard appears asking you to:
 If the app cannot connect to the OpenWebUI server, it displays a clear Connection error message with:  
 - Instructions to check your `config.json` settings  
 - A Refresh button to retry connecting without restarting the app  
+
+
+![Screenshot 2025-04-19 015544](https://github.com/user-attachments/assets/b99c5045-dca0-4299-a794-e2f417ec6b26)
 
 
 ---
