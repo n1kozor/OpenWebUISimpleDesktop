@@ -3,20 +3,26 @@
 <head>
   <meta charset="utf-8">
   <title>OpenwebuiSimpleDesktop</title>
-  <link rel="stylesheet" href="styles/app.css">
-  <link rel="stylesheet" href="styles/wizard.css">
-
+  <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
+<!-- PRELOADER -->
+<div id="preloader" class="preloader-dark">
+  <span id="preloader-text">OpenWebUISimpleDesktop</span>
+</div>
+
 <!-- Wizard overlay -->
-<div id="wizard-overlay" style="display:none">
-  <form class="wizard-inner" id="wizardForm" autocomplete="off" onsubmit="return false;">
+<div id="wizard-overlay" class="dark" style="display:none;">
+  <div class="wizard-theme-toggle">
+    <button class="wizard-theme-btn dark active" id="darkThemeBtn" aria-label="Dark mode" title="Dark mode">🌙</button>
+    <button class="wizard-theme-btn light" id="lightThemeBtn" aria-label="Light mode" title="Light mode">☀️</button>
+  </div>
+  <form class="wizard-inner dark" id="wizardForm" autocomplete="off" onsubmit="return false;">
     <div id="wizardStepAppName">
       <div class="wizard-label">Application name</div>
       <input class="wizard-input" id="appNameInput" maxlength="48" placeholder="e.g. MyWebUI" required autocomplete="off" autofocus>
       <button class="wizard-next" type="button" id="nextToShortcut" title="Next" disabled>Next</button>
     </div>
-
     <div id="wizardStepShortcut" style="display:none; text-align:center; padding: 10px;">
       <div class="wizard-label" style="margin-bottom:10px;">Keyboard Shortcut</div>
       <div style="font-weight:bold; font-size:1.2rem; margin-bottom:16px;">
@@ -27,7 +33,6 @@
       </div>
       <button class="wizard-next" type="button" id="nextToApiToken" title="Next">Next</button>
     </div>
-
     <div id="wizardStepApiToken" style="display:none">
       <div class="wizard-label">API Token (optional)</div>
       <input class="wizard-input" id="apiTokenInput" maxlength="256" placeholder="Enter your API key here" autocomplete="off" type="password">
@@ -37,13 +42,23 @@
       </div>
       <button class="wizard-next" type="button" id="nextToUrl" title="Next">Next</button>
     </div>
-
     <div id="wizardStepAppUrl" style="display:none">
       <div class="wizard-label">Server URL</div>
       <input class="wizard-input" id="webuiUrlInput" maxlength="256" placeholder="e.g. http://localhost:8080/" required autocomplete="off" value="http://localhost:8080">
+      <button class="wizard-next" type="button" id="nextToPreloaderTheme" title="Next" disabled>Next</button>
+    </div>
+    <div id="wizardStepPreloaderTheme" style="display:none; text-align:center">
+      <div class="wizard-label" style="margin-bottom:14px;">Preloader theme</div>
+      <div style="display:flex; align-items:center; justify-content:center; gap:28px; margin-bottom:30px;">
+        <button type="button" class="preloader-theme-btn" id="preloaderThemeDark" data-theme="dark">
+          <span style="font-size:1.5em;">🌙</span><br>Dark
+        </button>
+        <button type="button" class="preloader-theme-btn" id="preloaderThemeLight" data-theme="light">
+          <span style="font-size:1.5em;">☀️</span><br>Light
+        </button>
+      </div>
       <button class="wizard-next" type="button" id="nextToReady" title="Next" disabled>Next</button>
     </div>
-
     <div id="wizardStepReady" style="display:none;text-align:center">
       <div class="wizard-label" id="wizardReadyLabel" style="margin-bottom:18px; text-align:center; width:100%;">Ready! Start the application.</div>
       <button class="wizard-btn" id="wizardStartBtn" type="submit" style="margin:auto;display:block;">Start</button>
@@ -51,11 +66,7 @@
     <div id="wizard-error" style="color:#b00; font-size:1rem; margin-bottom:10px; display:none;text-align:center"></div>
   </form>
 </div>
-
 <!-- App UI -->
-<div id="preloader">
-  <span id="preloader-text">OpenWebUISimpleDesktop</span>
-</div>
 <div class="webview-wrap" id="webviewWrap">
   <webview id="webview" src="" allowpopups></webview>
 </div>
@@ -65,7 +76,6 @@
   <button class="window-btn btn-min" title="Minimize"></button>
   <button class="window-btn btn-max" title="Maximize"></button>
 </div>
-
 <div id="connection-error-message" style="display:none">
   <div class="connection-error-inner">
     <div class="connection-error-title">Connection error</div>
@@ -77,7 +87,6 @@
     <button id="connection-error-refresh" class="connection-error-refresh">Refresh</button>
   </div>
 </div>
-
 <script src="renderer.js"></script>
 </body>
 </html>
