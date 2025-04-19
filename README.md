@@ -1,19 +1,22 @@
-
-
-![Screenshot 2025-04-18 193738](https://github.com/user-attachments/assets/1fe084f2-9270-41bc-8df3-95d4a627f3df)
+![Screenshot 2025-04-18 193738.png](../../Pictures/Screenshots/Screenshot%202025-04-18%20193738.png)
 
 # OpenWebUISimpleDesktop
 
-**OpenWebUISimpleDesktop** is a minimal, modern Electron-based desktop wrapper for [OpenWebUI](https://github.com/open-webui/open-webui). This app provides a native desktop experience for OpenWebUI, with native window controls and seamless integration.
+**OpenWebUISimpleDesktop** is a minimal, modern Electron desktop wrapper for [OpenWebUI](https://github.com/open-webui/open-webui).  
+It provides a native desktop experience with native window controls and seamless integration, packaged as a simple Electron app with a built-in setup wizard.
 
 ---
 
 ## Features
 
-- Simple and clean Electron shell for OpenWebUI
-- Customizable window size, color, and more via `config.json`
-- Native desktop window controls (minimize, maximize, close)
-- Easy to build for Windows and macOS
+- Clean, lightweight Electron shell for OpenWebUI
+- Built-in first-launch setup wizard to configure app name and OpenWebUI server URL
+- Settings saved to `config.json` beside the executable for easy user customization
+- Native window controls (minimize, maximize, close)
+- Customizable window size, colors, and UI offsets via config
+- Displays a connection error message with retry button if the server is unreachable
+- Cross-platform support: Windows and macOS
+- Easy development with Node.js and Electron
 
 ---
 
@@ -21,108 +24,133 @@
 
 - [Node.js](https://nodejs.org/) (v18 or newer recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
-- [OpenWebUI](https://github.com/open-webui/open-webui) running somewhere accessible (e.g., `http://localhost:8000/`)
+- A running instance of [OpenWebUI](https://github.com/open-webui/open-webui) accessible via HTTP (e.g. `http://localhost:8080`)
 
 ---
 
 ## Installation
 
-1. **Clone or download** this repository.
-2. **Install dependencies:**
-
-```bash
-npm install
-```
+1. Clone or download this repository.
+2. Navigate to the project folder in a terminal.
+3. Install dependencies by running:  
+   `npm install`
 
 ---
 
 ## Configuration
 
-All application settings are managed in the `config.json` file in the project root.
+All settings are stored in `config.json` **next to the executable** after the first run wizard completes.  
+You can edit this file manually anytime to change app settings.
 
-**Example:**
+### Example `config.json` content:
 
 ```json
 {
-"appName": "OpenwebuiSimpleDesktop",
-"iconDarwin": "assets/icns.icns",
-"iconWin": "assets/ico.ico",
-"webuiUrl": "http://localhost:8080/",
-"bgColor": "#101014",
-"borderRadius": 16,
-"profileNavOffset": 5,
-"sidebarOffset": 15, 
-  "windowButtons": "right", //or "left" for Mac/Ubuntu Style
-"window": { "width": 1200, "height": 800, "minWidth": 500, "minHeight": 400 }
+  "appName": "OpenwebuiSimpleDesktop",
+  "iconDarwin": "assets/icons.icns",
+  "iconWin": "assets/ico.ico",
+  "webuiUrl": "http://localhost:8080/",
+  "bgColor": "#fff",
+  "borderRadius": 0,
+  "profileNavOffset": 15,
+  "sidebarOffset": 15,
+  "windowButtons": "right",
+  "window": {
+    "width": 1200,
+    "height": 800,
+    "minWidth": 500,
+    "minHeight": 400
+  }
 }
 ```
 
-- **`webuiUrl`**: Set this to the URL where your OpenWebUI server is running.
-- Make sure your icon files exist at the paths given in `iconDarwin` and `iconWin`, or adjust as needed.
+`webuiUrl`: The URL where your OpenWebUI server is running.  
+`windowButtons`: Position of window control buttons, `"right"` or `"left"`.  
+
+Adjust icon paths if you customize icons.
 
 ---
-## DOM Manipulation Fine-Tuning
 
-In config.json:
+## Fine-Tuning UI Offsets in `config.json`
 
-```json
-"profileNavOffset": 5, //Change this 10-15
-"sidebarOffset": 15, //Change this 10-15
-"windowButtons": "right", //or "left" for Mac/Ubuntu Style
-```
-![img_1.png](img_1.png)
+Adjust these values to fix UI margins/offsets in OpenWebUI's webview:
+
+- `profileNavOffset`: 15  
+- `sidebarOffset`: 15  
+
+Typical values range from 10 to 20 depending on your theme and UI.
+
+---
+
+## First Launch Setup Wizard
+![Screenshot 2025-04-19 015500.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015500.png)
+
+![Screenshot 2025-04-19 015513.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015513.png)
+
+![Screenshot 2025-04-19 015525.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015525.png)
+
+![Screenshot 2025-04-19 015534.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015534.png)
 
 
-# Preloader
+On first launch, a simple, clean wizard appears asking you to:  
+- Enter the Application Name  
+- Enter the OpenWebUI Server URL (defaults to `http://localhost:8080`)  
+- Click Start to save and launch the app  
+
+---
+
+## Connection Error Handling
+
+![Screenshot 2025-04-19 015544.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015544.png)
+
+If the app cannot connect to the OpenWebUI server, it displays a clear Connection error message with:  
+- Instructions to check your `config.json` settings  
+- A Refresh button to retry connecting without restarting the app  
 
 
-## The Text for the Preloader is your App-Name in config.json
-![img_2.png](img_2.png)
+---
 
 ## Usage
 
 ### Development Mode
 
-To run the app in development mode:
+Run the app in development mode with:
 
-```bash
-npx electron main.js
-```
+`npx electron main.js`
 
-### Build Distributable
-
-To build for your platform (Windows or macOS) using [electron-builder](https://www.electron.build/):
-
-```bash
-npm run dist
-```
-- Output installers/packages will appear in the `dist/` folder.
-- Configuration for packaging is in the `package.json` under the `build` key.
+This will start the app loading local files and allowing you to develop and test.
 
 ---
 
-## Customization
+### Build Distributable
 
-- **Change the OpenWebUI server address:**
-  Edit the `"webuiUrl"` value in `config.json` before building.
-- **Change window or visual settings:**
-  Edit the corresponding values in `config.json`.
+To build a Windows or macOS installer/package using electron-builder, run:
+
+`npm run dist`
+
+- Output installers are created inside the dist folder.  
+- Packaging settings are in package.json under the "build" key.
 
 ---
 
 ## Troubleshooting
 
-- **Blank window or cannot connect:**
-  Ensure that your `webuiUrl` is correct and the OpenWebUI server is actually running and accessible from your machine.
-- **Icons not appearing:**
-  Make sure the icon files exist at the specified paths, or update the config accordingly.
+- Blank window or connection refused:  
+  Make sure your OpenWebUI server URL in config.json is correct and your OpenWebUI server is running and reachable.
+
+- Config file not found after wizard:  
+  The config.json file is saved next to the executable. Ensure the app has write permissions to its folder.
+
+- Icons missing:  
+  Verify icon files exist at the paths set in config.json or update paths to your custom icons.
 
 ---
-
 
 ## Credits
 
-- [OpenWebUI](https://github.com/open-webui/open-webui)
-- [Electron](https://www.electronjs.org/)
+- OpenWebUI  
+- Electron  
 
 ---
+
+Enjoy using OpenWebUISimpleDesktop!  
