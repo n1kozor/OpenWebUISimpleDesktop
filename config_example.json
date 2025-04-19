@@ -1,0 +1,17 @@
+{
+  "iconDarwin": "assets/icons.icns",
+  "iconWin": "assets/ico.ico",
+  "bgColor": "#fff",
+  "borderRadius": 0,
+  "profileNavOffset": 15,
+  "sidebarOffset": 15,
+  "windowButtons": "right",
+  "window": {
+    "width": 1200,
+    "height": 800,
+    "minWidth": 500,
+    "minHeight": 400
+  },
+  "appName": "TestApp",
+  "webuiUrl": "http://localhost:8080"
+}
