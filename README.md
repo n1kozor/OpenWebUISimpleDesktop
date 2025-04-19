@@ -1,5 +1,3 @@
-![Screenshot 2025-04-18 193738.png](../../Pictures/Screenshots/Screenshot%202025-04-18%20193738.png)
-
 # OpenWebUISimpleDesktop
 
 **OpenWebUISimpleDesktop** is a minimal, modern Electron desktop wrapper for [OpenWebUI](https://github.com/open-webui/open-webui).  
@@ -83,14 +81,6 @@ Typical values range from 10 to 20 depending on your theme and UI.
 ---
 
 ## First Launch Setup Wizard
-![Screenshot 2025-04-19 015500.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015500.png)
-
-![Screenshot 2025-04-19 015513.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015513.png)
-
-![Screenshot 2025-04-19 015525.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015525.png)
-
-![Screenshot 2025-04-19 015534.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015534.png)
-
 
 On first launch, a simple, clean wizard appears asking you to:  
 - Enter the Application Name  
@@ -101,7 +91,6 @@ On first launch, a simple, clean wizard appears asking you to:
 
 ## Connection Error Handling
 
-![Screenshot 2025-04-19 015544.png](../../Pictures/Screenshots/Screenshot%202025-04-19%20015544.png)
 
 If the app cannot connect to the OpenWebUI server, it displays a clear Connection error message with:  
 - Instructions to check your `config.json` settings  
