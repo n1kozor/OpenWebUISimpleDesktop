@@ -52,6 +52,12 @@ function createMainWindow() {
         }
     });
 
+    // ÚJ: Átlátszóság beállítása a configból
+    const opacity = config?.opacity;
+    if (typeof opacity === 'number' && opacity >= 0 && opacity <= 1) {
+        mainWindow.setOpacity(opacity);
+    }
+
     mainWindow.loadFile('index.html');
 
     mainWindow.on('close', (event) => {

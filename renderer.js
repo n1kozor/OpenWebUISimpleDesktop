@@ -117,6 +117,7 @@ function wizardLogic() {
             },
             appName: wizardData.appName,
             webuiUrl: wizardData.webuiUrl,
+            opacity: 1
         };
 
         window.electronAPI.saveConfig(fullConfig);

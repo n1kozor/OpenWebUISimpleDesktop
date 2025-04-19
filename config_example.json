@@ -14,5 +14,6 @@
     "minHeight": 400
   },
   "appName": "TestApp",
-  "webuiUrl": "http://localhost:8080"
+  "webuiUrl": "http://localhost:8080",
+  "opacity": 0.9
 }
