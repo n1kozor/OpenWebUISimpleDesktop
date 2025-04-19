@@ -44,7 +44,12 @@
     </div>
     <div id="wizardStepAppUrl" style="display:none">
       <div class="wizard-label">Server URL</div>
+      <div style="margin-bottom:10px; font-size:0.9em; color:#ccc; text-align:center; max-width:350px; margin-left:auto; margin-right:auto;">
+        If you don’t know the server address, you can use the “Scan network” button to automatically search your local network for running OpenWebUI servers. This can help you find and select the correct server easily, but please note it may not work in all cases.
+      </div>
       <input class="wizard-input" id="webuiUrlInput" maxlength="256" placeholder="e.g. http://localhost:8080/" required autocomplete="off" value="http://localhost:8080">
+      <button type="button" class="wizard-next" id="scanNetworkBtn">Scan network</button>
+      <div id="networkScanResult" style="margin:16px auto 0 auto; font-size:0.95em; max-width:350px; text-align:center;"></div>
       <button class="wizard-next" type="button" id="nextToPreloaderTheme" title="Next" disabled>Next</button>
     </div>
     <div id="wizardStepPreloaderTheme" style="display:none; text-align:center">

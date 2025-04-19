@@ -1,6 +1,5 @@
 let config = null;
 
-// Wizard theme only for wizard overlay
 function setWizardTheme(theme) {
     const overlay = document.getElementById('wizard-overlay');
     const inner = document.getElementById('wizardForm');
@@ -12,7 +11,6 @@ function setWizardTheme(theme) {
     document.getElementById('lightThemeBtn').classList.toggle('active', theme === 'light');
 }
 
-// Show/hide wizard overlay
 function showWizard() {
     document.getElementById('wizard-overlay').style.display = 'flex';
     document.getElementById('preloader').style.display = 'none';
@@ -30,9 +28,7 @@ function hideWizard() {
     document.querySelector('.drag-overlay').style.display = '';
 }
 
-// Wizard step logic
 function wizardLogic() {
-    // Wizard step elems
     const wizardStepIds = [
         'wizardStepAppName',
         'wizardStepShortcut',
@@ -42,7 +38,6 @@ function wizardLogic() {
         'wizardStepReady'
     ];
     const steps = wizardStepIds.map(id => document.getElementById(id));
-    // Wizard navigation
     function showStep(idx) {
         steps.forEach((step, i) => {
             step.style.display = (i === idx) ? (wizardStepIds[i] === 'wizardStepReady' ? 'flex' : 'block') : 'none';
@@ -51,7 +46,6 @@ function wizardLogic() {
         if(idx === 2) setTimeout(()=>apiTokenInput.focus(), 80);
         if(idx === 3) setTimeout(()=>webuiUrlInput.focus(), 80);
     }
-    // Input elems, buttons
     const appNameInput = document.getElementById('appNameInput');
     const apiTokenInput = document.getElementById('apiTokenInput');
     const webuiUrlInput = document.getElementById('webuiUrlInput');
@@ -64,11 +58,10 @@ function wizardLogic() {
     const wizardError = document.getElementById('wizard-error');
     const preloaderBtnDark = document.getElementById('preloaderThemeDark');
     const preloaderBtnLight = document.getElementById('preloaderThemeLight');
-    // Wizard state
+    const scanNetworkBtn = document.getElementById('scanNetworkBtn');
+    const scanResultDiv = document.getElementById('networkScanResult');
     let wizardData = {};
     let preloaderThemeValue = null;
-
-    // App name step
     appNameInput.addEventListener('input', () => {
         nextToShortcut.disabled = appNameInput.value.trim().length < 1;
     });
@@ -76,21 +69,15 @@ function wizardLogic() {
         wizardData.appName = appNameInput.value.trim();
         showStep(1);
     });
-
-    // Shortcut step
     nextToApiToken.addEventListener('click', () => {
         showStep(2);
         apiTokenInput.focus();
     });
-
-    // API token step
     nextToUrl.addEventListener('click', () => {
         wizardData.apiToken = apiTokenInput.value;
         showStep(3);
         webuiUrlInput.focus();
     });
-
-    // Server url step
     function validateUrl(url) {
         url = url.trim();
         return url.startsWith('http://') || url.startsWith('https://');
@@ -106,8 +93,6 @@ function wizardLogic() {
         preloaderBtnDark.classList.remove('selected');
         preloaderBtnLight.classList.remove('selected');
     });
-
-    // Preloader theme választó
     [preloaderBtnDark, preloaderBtnLight].forEach(btn => {
         btn.onclick = () => {
             preloaderBtnDark.classList.toggle('selected', btn === preloaderBtnDark);
@@ -120,8 +105,6 @@ function wizardLogic() {
         showStep(5);
         wizardStartBtn.focus();
     });
-
-    // Submit (mentés)
     wizardStartBtn.addEventListener('click', e => {
         e.preventDefault();
         wizardError.style.display = 'none';
@@ -149,8 +132,6 @@ function wizardLogic() {
         document.getElementById('wizard-overlay').style.opacity = '0.2';
         document.getElementById('wizard-overlay').style.pointerEvents = 'none';
     });
-
-    // Enter billentyű navigáció
     appNameInput.addEventListener('keydown', e => {
         if (e.key === 'Enter' && !nextToShortcut.disabled) nextToShortcut.click();
     });
@@ -160,8 +141,6 @@ function wizardLogic() {
     webuiUrlInput.addEventListener('keydown', e => {
         if (e.key === 'Enter' && !nextToPreloaderTheme.disabled) nextToPreloaderTheme.click();
     });
-
-    // Hiba
     window.electronAPI.onConfigSaveError(err => {
         wizardError.textContent = 'Failed to save config: ' + (err?.msg || 'Unknown error.');
         wizardError.style.display = '';
@@ -174,9 +153,70 @@ function wizardLogic() {
             if (cfg) runAppWithConfig(cfg);
         });
     });
+
+    if (scanNetworkBtn) {
+        let scanLoaderInterval = null;
+        scanNetworkBtn.onclick = async () => {
+            scanNetworkBtn.disabled = true;
+            let dots = 0;
+            scanResultDiv.innerHTML = `<div style="color:#888;font-style:italic;text-align:center;">Scanning local network<span id="dots"></span></div>`;
+            scanLoaderInterval = setInterval(() => {
+                dots = (dots + 1) % 4;
+                document.getElementById('dots').textContent = '.'.repeat(dots);
+            }, 500);
+            try {
+                const servers = await window.electronAPI.scanOpenwebui();
+                clearInterval(scanLoaderInterval);
+                if (servers.length === 0) {
+                    scanResultDiv.innerHTML = `<div style="color:#e77; font-weight:bold; text-align:center;">No OpenWebUI server found on local network.</div>`;
+                } else {
+                    scanResultDiv.innerHTML =
+                        `<div style="font-weight:bold; margin-bottom:8px; color:#77aaff; text-align:center;">Found OpenWebUI server${servers.length>1?'s':''}:</div>` +
+                        servers.map(s =>
+                            `<div style="margin-bottom:10px; text-align:center;">
+              <a href="#" class="found-server"
+                data-ip="${s.ip}" data-port="${s.port}"
+                style="
+                  display:inline-block;
+                  padding: 10px 20px;
+                  border-radius: 10px;
+                  background: linear-gradient(90deg, #22aaff 40%, #38e4e4 100%);
+                  color: #fff;
+                  font-weight:700;
+                  text-decoration:none;
+                  font-size:1.12em;
+                  margin-bottom:5px;
+                  box-shadow: 0 2px 10px #0002;
+                  transition: background 0.2s;
+                  text-align:center;
+                "
+                onmouseover="this.style.background='#2377b6';"
+                onmouseout="this.style.background='linear-gradient(90deg, #22aaff 40%, #38e4e4 100%)';"
+              >
+                ${s.ip}:${s.port} <span style="font-size:.92em; font-weight:400;">(v${s.version})</span>
+              </a>
+            </div>`
+                        ).join("");
+                    document.querySelectorAll('.found-server').forEach(link => {
+                        link.onclick = (e) => {
+                            e.preventDefault();
+                            webuiUrlInput.value = `http://${link.dataset.ip}:${link.dataset.port}`;
+                            scanResultDiv.innerHTML = `<div style="color:#5c5; font-weight:600; text-align:center;">Selected: ${webuiUrlInput.value}</div>`;
+                            nextToPreloaderTheme.disabled = !validateUrl(webuiUrlInput.value);
+                        };
+                    });
+                }
+            } catch (err) {
+                clearInterval(scanLoaderInterval);
+                scanResultDiv.innerHTML = `<div style="color:#e55; font-weight:600; text-align:center;">Error during scan: ${err}</div>`;
+            } finally {
+                scanNetworkBtn.disabled = false;
+                clearInterval(scanLoaderInterval);
+            }
+        };
+    }
 }
 
-// Run app with config
 function runAppWithConfig(cfg) {
     config = cfg;
     document.getElementById('preloader-text').innerText = cfg.appName;
@@ -208,17 +248,14 @@ function runAppWithConfig(cfg) {
     let preloaderDone = false;
     let minTimePassed = false;
     let lastError = false;
-
     setTimeout(() => {
         minTimePassed = true;
         if (preloaderDone) removePreloader();
     }, 3000);
-
     function removePreloader() {
         preloaderElem.classList.add('preloader-fade');
         setTimeout(() => preloaderElem.remove(), 500);
     }
-
     webview.addEventListener('did-fail-load', event => {
         if (event.isMainFrame) {
             webviewWrap.style.display = 'none';
@@ -229,7 +266,6 @@ function runAppWithConfig(cfg) {
             lastError = true;
         }
     });
-
     webview.addEventListener('did-finish-load', () => {
         if (!lastError) {
             preloaderDone = true;
@@ -237,44 +273,10 @@ function runAppWithConfig(cfg) {
             webviewWrap.style.display = '';
             dragOverlay.style.display = '';
             if (errorMsg) errorMsg.style.display = 'none';
-            // Margin fix for OpenWebUI UI
-            webview.executeJavaScript(`
-        const profileNavOffset = ${cfg.profileNavOffset};
-        const sidebarOffset = ${cfg.sidebarOffset};
-        const nav = document.querySelector('nav.sticky.top-0');
-        if (nav && !nav.dataset.movedByElectron) {
-          nav.style.marginTop = profileNavOffset + 'px';
-          nav.style.zIndex = '100';
-          nav.dataset.movedByElectron = '1';
-        }
-        const sidebar = document.querySelector('div.py-2.my-auto.flex.flex-col.justify-between');
-        if (sidebar && !sidebar.dataset.movedByElectron) {
-          sidebar.style.marginTop = sidebarOffset + 'px';
-          sidebar.style.height = 'calc(100vh - ' + sidebarOffset + 'px)';
-          sidebar.style.maxHeight = 'calc(100dvh - ' + sidebarOffset + 'px)';
-          sidebar.dataset.movedByElectron = '1';
-        }
-        const observer = new MutationObserver(() => {
-          const nav = document.querySelector('nav.sticky.top-0');
-          if (nav && !nav.dataset.movedByElectron) {
-            nav.style.marginTop = profileNavOffset + 'px';
-            nav.style.zIndex = '20';
-            nav.dataset.movedByElectron = '1';
-          }
-          const sidebar = document.querySelector('div.py-2.my-auto.flex.flex-col.justify-between');
-          if (sidebar && !sidebar.dataset.movedByElectron) {
-            sidebar.style.marginTop = sidebarOffset + 'px';
-            sidebar.style.height = 'calc(100vh - ' + sidebarOffset + 'px)';
-            sidebar.style.maxHeight = 'calc(100dvh - ' + sidebarOffset + 'px)';
-            sidebar.dataset.movedByElectron = '1';
-          }
-        });
-        observer.observe(document.body, {childList:true, subtree:true});
-      `);
+            webview.executeJavaScript(`         const profileNavOffset = ${cfg.profileNavOffset};         const sidebarOffset = ${cfg.sidebarOffset};         const nav = document.querySelector('nav.sticky.top-0');         if (nav && !nav.dataset.movedByElectron) {           nav.style.marginTop = profileNavOffset + 'px';           nav.style.zIndex = '100';           nav.dataset.movedByElectron = '1';         }         const sidebar = document.querySelector('div.py-2.my-auto.flex.flex-col.justify-between');         if (sidebar && !sidebar.dataset.movedByElectron) {           sidebar.style.marginTop = sidebarOffset + 'px';           sidebar.style.height = 'calc(100vh - ' + sidebarOffset + 'px)';           sidebar.style.maxHeight = 'calc(100dvh - ' + sidebarOffset + 'px)';           sidebar.dataset.movedByElectron = '1';         }         const observer = new MutationObserver(() => {           const nav = document.querySelector('nav.sticky.top-0');           if (nav && !nav.dataset.movedByElectron) {             nav.style.marginTop = profileNavOffset + 'px';             nav.style.zIndex = '20';             nav.dataset.movedByElectron = '1';           }           const sidebar = document.querySelector('div.py-2.my-auto.flex.flex-col.justify-between');           if (sidebar && !sidebar.dataset.movedByElectron) {             sidebar.style.marginTop = sidebarOffset + 'px';             sidebar.style.height = 'calc(100vh - ' + sidebarOffset + 'px)';             sidebar.style.maxHeight = 'calc(100dvh - ' + sidebarOffset + 'px)';             sidebar.dataset.movedByElectron = '1';           }         });         observer.observe(document.body, {childList:true, subtree:true});       `);
         }
         lastError = false;
     });
-
     if (refreshBtn) {
         refreshBtn.onclick = () => {
             if (errorMsg) errorMsg.style.display = 'none';
@@ -287,19 +289,14 @@ function runAppWithConfig(cfg) {
         };
     }
 }
-
-// Native window buttons
 document.querySelector('.btn-close').onclick = () => window.electronAPI.windowControls.close();
 document.querySelector('.btn-min').onclick = () => window.electronAPI.windowControls.minimize();
 document.querySelector('.btn-max').onclick = () => window.electronAPI.windowControls.maximize();
 
-// Init
 function init() {
-    // Wizard theme init: dark alapból
     setWizardTheme('dark');
     document.getElementById('darkThemeBtn').onclick = () => setWizardTheme('dark');
     document.getElementById('lightThemeBtn').onclick = () => setWizardTheme('light');
-
     window.electronAPI.getConfig().then(cfg => {
         if (!cfg) {
             showWizard();
@@ -311,9 +308,9 @@ function init() {
         }
     });
 }
+
 init();
 
-// Chat reload, chat open, stb.
 window.electronAPI.onOpenChat((url) => {
     const webview = document.getElementById('webview');
     webview.src = 'about:blank';
@@ -321,6 +318,7 @@ window.electronAPI.onOpenChat((url) => {
         webview.src = url;
     }, 100);
 });
+
 window.electronAPI.onReloadApp(() => {
     setTimeout(() => {
         window.electronAPI.getConfig().then(cfg => {
@@ -332,23 +330,11 @@ window.electronAPI.onReloadApp(() => {
         });
     }, 400);
 });
+
 window.electronAPI.onStartChatWithModel = (modelName) => {
     const webview = document.getElementById('webview');
     webview.src = config.webuiUrl;
     webview.addEventListener('did-finish-load', () => {
-        webview.executeJavaScript(`
-      const interval = setInterval(() => {
-        const textarea = document.querySelector('textarea');
-        if (textarea) {
-          textarea.value = "Hi!";
-          textarea.dispatchEvent(new Event('input'));
-          const sendBtn = textarea.closest('form')?.querySelector('button[type="submit"]');
-          if (sendBtn) {
-            sendBtn.click();
-            clearInterval(interval);
-          }
-        }
-      }, 200);
-    `);
+        webview.executeJavaScript(`       const interval = setInterval(() => {         const textarea = document.querySelector('textarea');         if (textarea) {           textarea.value = "Hi!";           textarea.dispatchEvent(new Event('input'));           const sendBtn = textarea.closest('form')?.querySelector('button[type="submit"]');           if (sendBtn) {             sendBtn.click();             clearInterval(interval);           }         }       }, 200);     `);
     }, { once: true });
 };

@@ -13,5 +13,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onConfigSaved: (cb) => ipcRenderer.on('config-saved', cb),
     onConfigSaveError: (cb) => ipcRenderer.on('config-save-error', (event, err) => cb(err)),
     onStartChatWithModel: (cb) => ipcRenderer.on('start-chat-with-model', (event, modelName) => cb(modelName)),
+    scanOpenwebui: () => ipcRenderer.invoke('scan-openwebui')
+
 
 });
