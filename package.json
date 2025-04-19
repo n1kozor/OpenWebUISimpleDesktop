@@ -1,8 +1,8 @@
 {
   "name": "openwebuisimpledesktop",
-  "productName": "OpenwebUISimpleDesktop",
-  "version": "1.0.0",
-  "description": "OpenwebUI-SimpleDesktop",
+  "productName": "OpenWebUISimpleDesktop",
+  "version": "0.0.1",
+  "description": "OpenWebUI-SimpleDesktop",
   "author": "N1kozor",
   "main": "main.js",
   "scripts": {
