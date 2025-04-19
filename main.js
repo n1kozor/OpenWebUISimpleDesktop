@@ -4,8 +4,10 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 const isPackaged = app.isPackaged;
-const appDir = isPackaged ? path.dirname(process.execPath) : __dirname;
-const configPath = path.join(appDir, 'config.json');
+
+// Konfigurációs mappa és fájl elérési útja a felhasználói adatkönyvtárban
+const configDir = app.getPath('userData');
+const configPath = path.join(configDir, 'config.json');
 
 let mainWindow = null;
 let modalWindow = null;
@@ -13,11 +15,12 @@ let tray = null;
 let isQuiting = false;
 
 app.commandLine.appendSwitch('disable-gpu');
-// Allow self-signed/invalid certificates (for local dev)
+// Self-signed vagy invalid cert figyelmen kívül hagyása (fejlesztéshez)
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
 function readConfig() {
     try {
+        if (!fs.existsSync(configPath)) return null;
         return JSON.parse(fs.readFileSync(configPath, 'utf8'));
     } catch {
         return null;
@@ -32,6 +35,7 @@ function getIconPath(cfg) {
 
 function createMainWindow() {
     let config = readConfig();
+
     mainWindow = new BrowserWindow({
         width: config?.window?.width || 1200,
         height: config?.window?.height || 800,
@@ -52,7 +56,7 @@ function createMainWindow() {
         }
     });
 
-    // ÚJ: Átlátszóság beállítása a configból
+    // Átlátszóság beállítása a configból
     const opacity = config?.opacity;
     if (typeof opacity === 'number' && opacity >= 0 && opacity <= 1) {
         mainWindow.setOpacity(opacity);
@@ -95,10 +99,12 @@ function createModalWindow() {
             nodeIntegration: false
         }
     });
+
     modalWindow.loadFile('modal.html');
     modalWindow.once('ready-to-show', () => {
         modalWindow.show();
     });
+
     modalWindow.on('closed', () => {
         modalWindow = null;
     });
@@ -109,6 +115,7 @@ app.whenReady().then(() => {
 
     const iconPath = getIconPath({});
     tray = new Tray(iconPath);
+
     const trayMenu = Menu.buildFromTemplate([
         {
             label: 'Show App',
@@ -127,6 +134,7 @@ app.whenReady().then(() => {
             }
         }
     ]);
+
     tray.setToolTip('OpenwebuiSimpleDesktop');
     tray.setContextMenu(trayMenu);
 
@@ -140,9 +148,7 @@ app.on('will-quit', () => {
 });
 
 app.on('window-all-closed', (e) => {
-
     if (process.platform !== 'darwin') {
-
         e.preventDefault();
     }
 });
@@ -153,16 +159,21 @@ app.on('activate', () => {
 
 async function apiFetch(cfg, endpoint, options = {}) {
     if (!cfg?.webuiUrl) throw new Error('No webuiUrl in config');
+
     let baseUrl = cfg.webuiUrl.replace(/^http:\/\/localhost/, 'http://127.0.0.1');
     const url = new URL(endpoint, baseUrl).href;
+
     const headers = {
         'Content-Type': 'application/json',
         ...(options.headers || {})
     };
+
     if (cfg.apiToken) {
         headers['Authorization'] = `Bearer ${cfg.apiToken}`;
     }
+
     const res = await fetch(url, { ...options, headers });
+
     if (!res.ok) throw new Error(await res.text());
     return await res.json();
 }
@@ -177,6 +188,9 @@ ipcMain.handle('get-config', () => {
 
 ipcMain.on('save-config', (event, configData) => {
     try {
+        if (!fs.existsSync(configDir)) {
+            fs.mkdirSync(configDir, { recursive: true });
+        }
         fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), 'utf8');
         event.sender.send('config-saved');
     } catch (err) {
@@ -212,7 +226,6 @@ ipcMain.handle('modal-start-chat', async (event, modelName, initialMessageRaw) =
             }
         })
     });
-
     const chatId = newChatResponse?.id;
     if (!chatId) throw new Error("❌ Could not create new chat");
 
@@ -293,7 +306,6 @@ ipcMain.handle('modal-start-chat', async (event, modelName, initialMessageRaw) =
     return chatId;
 });
 
-
 ipcMain.on('modal-open-chat', (event, chatId) => {
     if (!chatId) return;
 
@@ -311,7 +323,6 @@ ipcMain.on('modal-open-chat', (event, chatId) => {
         }
         openChatAndFocus(mainWindow, chatId);
     }
-
     if (modalWindow) {
         modalWindow.close();
     }
