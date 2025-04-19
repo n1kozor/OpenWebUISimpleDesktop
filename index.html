@@ -5,6 +5,7 @@
   <title>OpenwebuiSimpleDesktop</title>
   <link rel="stylesheet" href="styles/app.css">
   <link rel="stylesheet" href="styles/wizard.css">
+
 </head>
 <body>
 <!-- Wizard overlay -->
@@ -13,13 +14,36 @@
     <div id="wizardStepAppName">
       <div class="wizard-label">Application name</div>
       <input class="wizard-input" id="appNameInput" maxlength="48" placeholder="e.g. MyWebUI" required autocomplete="off" autofocus>
-      <button class="wizard-next" type="button" id="nextToUrl" title="Next" disabled>Next</button>
+      <button class="wizard-next" type="button" id="nextToShortcut" title="Next" disabled>Next</button>
     </div>
+
+    <div id="wizardStepShortcut" style="display:none; text-align:center; padding: 10px;">
+      <div class="wizard-label" style="margin-bottom:10px;">Keyboard Shortcut</div>
+      <div style="font-weight:bold; font-size:1.2rem; margin-bottom:16px;">
+        <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
+      </div>
+      <div style="color:#666; font-size:0.9rem; margin-bottom:24px;">
+        Use this shortcut anytime to open the modal chat window.
+      </div>
+      <button class="wizard-next" type="button" id="nextToApiToken" title="Next">Next</button>
+    </div>
+
+    <div id="wizardStepApiToken" style="display:none">
+      <div class="wizard-label">API Token (optional)</div>
+      <input class="wizard-input" id="apiTokenInput" maxlength="256" placeholder="Enter your API key here" autocomplete="off" type="password">
+      <div style="font-size:0.85rem; color:#b33; margin-top:8px; margin-bottom:14px;">
+        <strong>Note:</strong> Get your API key from <em>Settings (non-admin) / Profile / API Key</em> in the OpenWebUI interface.<br>
+        If you don't provide it, shortcuts will not work.
+      </div>
+      <button class="wizard-next" type="button" id="nextToUrl" title="Next">Next</button>
+    </div>
+
     <div id="wizardStepAppUrl" style="display:none">
       <div class="wizard-label">Server URL</div>
       <input class="wizard-input" id="webuiUrlInput" maxlength="256" placeholder="e.g. http://localhost:8080/" required autocomplete="off" value="http://localhost:8080">
       <button class="wizard-next" type="button" id="nextToReady" title="Next" disabled>Next</button>
     </div>
+
     <div id="wizardStepReady" style="display:none;text-align:center">
       <div class="wizard-label" id="wizardReadyLabel" style="margin-bottom:18px; text-align:center; width:100%;">Ready! Start the application.</div>
       <button class="wizard-btn" id="wizardStartBtn" type="submit" style="margin:auto;display:block;">Start</button>

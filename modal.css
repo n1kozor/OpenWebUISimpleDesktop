@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    --color-bg: #121212;
+    --color-modal-bg: #1e1e2f;
+    --color-border: #33334d;
+    --color-primary: #4f8ef7;
+    --color-primary-hover: #3c6fd5;
+    --color-secondary: #2a2a3d;
+    --color-error: #f44336;
+    --color-text-primary: #e0e0e0;
+    --color-text-secondary: #b0b0c3;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    --font-main: 'Inter', "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background: transparent;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.gpt-modal-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.gpt-modal {
+    background: var(--color-modal-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 400px;
+    width: 90vw;
+    padding: 32px 28px 22px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    -webkit-app-region: drag;
+    user-select: none;
+    color: var(--color-text-primary);
+}
+
+.gpt-modal * {
+    user-select: text;
+}
+
+.gpt-title {
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-align: center;
+    letter-spacing: -0.5px;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-field {
+    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.gpt-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+    letter-spacing: 0.1px;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-select-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.gpt-dropdown-input {
+    width: 100%;
+    padding: 10px 38px 10px 12px;
+    font-size: 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 9px;
+    background: var(--color-secondary);
+    outline: none;
+    transition: border-color 0.18s, background-color 0.18s;
+    font-family: inherit;
+    color: var(--color-text-primary);
+    box-sizing: border-box;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-dropdown-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.gpt-dropdown-input:focus {
+    border-color: var(--color-primary);
+    background: #292a45;
+}
+
+.gpt-dropdown-arrow {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+    z-index: 2;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-dropdown-list {
+    position: absolute;
+    width: 100%;
+    background: var(--color-secondary);
+    list-style: none;
+    margin: 2px 0 0 0;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 40;
+    display: none;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-dropdown-list.active {
+    display: block;
+}
+
+.gpt-dropdown-list li {
+    padding: 11px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    transition: background 0.15s, color 0.15s;
+    border-bottom: 1px solid #3a3a5a;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-dropdown-list li:last-child {
+    border-bottom: none;
+}
+
+.gpt-dropdown-list li.selected,
+.gpt-dropdown-list li:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.gpt-loader {
+    position: absolute;
+    right: 38px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border: 3px solid #3a3a5a;
+    border-top: 3px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: none;
+    z-index: 10;
+    -webkit-app-region: no-drag;
+}
+
+@keyframes spin {
+    0% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.gpt-message-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 9px;
+    background: var(--color-secondary);
+    outline: none;
+    font-family: inherit;
+    color: var(--color-text-primary);
+    box-sizing: border-box;
+    transition: border-color 0.18s, background-color 0.18s;
+    -webkit-app-region: no-drag;
+}
+
+.gpt-message-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.gpt-message-input:focus {
+    border-color: var(--color-primary);
+    background: #292a45;
+}
+
+.gpt-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gpt-btn {
+    padding: 10px 28px;
+    border-radius: 9px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    outline: none;
+    min-width: 120px;
+    user-select: none;
+    -webkit-app-region: no-drag;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.gpt-cancel-btn {
+    background: #3a3a5a;
+    color: var(--color-text-primary);
+}
+
+.gpt-cancel-btn:hover,
+.gpt-cancel-btn:focus {
+    background: #535376;
+}
+
+.gpt-start-btn {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.gpt-start-btn:hover,
+.gpt-start-btn:focus {
+    background: var(--color-primary-hover);
+}
+
+.gpt-btn:disabled {
+    background: #555570;
+    color: #aaaabb;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.gpt-error {
+    min-height: 24px;
+    color: var(--color-error);
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 4px;
+    -webkit-app-region: no-drag;
+}
+
+@media (max-width: 480px) {
+    .gpt-modal {
+        padding: 20px 16px 16px 16px;
+    }
+    .gpt-title {
+        font-size: 1.2rem;
+    }
+    .gpt-btn {
+        min-width: 100px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+}

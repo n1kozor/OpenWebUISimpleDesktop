@@ -13,8 +13,12 @@
     "files": [
       "main.js",
       "preload.js",
+      "modal.html",
+      "modal.js",
+      "modal-preload.js",
       "renderer.js",
       "index.html",
+      "modal.css",
       "styles/**/*",
       "assets/**/*"
     ],

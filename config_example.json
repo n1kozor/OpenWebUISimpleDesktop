@@ -5,6 +5,7 @@
   "borderRadius": 0,
   "profileNavOffset": 15,
   "sidebarOffset": 15,
+  "apiToken": "your_openwebui_api_key",
   "windowButtons": "right",
   "window": {
     "width": 1200,
