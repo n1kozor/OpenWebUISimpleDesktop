@@ -29,6 +29,10 @@
       "icon": "assets/ico.ico",
       "target": [ "nsis", "portable" ]
     },
+    "linux": {
+      "icon": "assets/ico.ico",
+      "target": [ "AppImage", "deb", "rpm" ]
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
