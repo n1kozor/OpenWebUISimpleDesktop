@@ -40,7 +40,7 @@
       "createStartMenuShortcut": true
     },
     "mac": {
-      "icon": "assets/icns.icns",
+      "icon": "assets/ico.icns",
       "category": "public.app-category.productivity"
     }
   },
