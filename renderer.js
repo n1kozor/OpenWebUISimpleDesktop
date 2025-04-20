@@ -109,7 +109,7 @@ function wizardLogic() {
         e.preventDefault();
         wizardError.style.display = 'none';
         const fullConfig = {
-            iconDarwin: "assets/icons.icns",
+            iconDarwin: "assets/ico.icns",
             iconWin: "assets/ico.ico",
             bgColor: "#fff",
             borderRadius: 0,

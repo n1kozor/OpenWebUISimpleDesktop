@@ -53,7 +53,7 @@ All settings are stored in `config.json` under the user data directory:
 
 ```json
 {
-  "iconDarwin": "assets/icons.icns",
+  "iconDarwin": "assets/ico.icns",
   "iconWin": "assets/ico.ico",
   "bgColor": "#fff",
   "borderRadius": 0,
