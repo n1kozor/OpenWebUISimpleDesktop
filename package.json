@@ -7,7 +7,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist-macOS": "electron-builder --mac --x64 --arm64"
   },
   "build": {
     "files": [
@@ -23,14 +24,14 @@
     ],
     "appId": "com.openwebuisimpledesktop.desktop",
     "productName": "OpenwebuiSimpleDesktop",
-    "icon": "assets/ico.ico",
+    "icon": "assets/ico.icns",
     "win": {
       "icon": "assets/ico.ico",
-      "target": [ "nsis", "portable" ]
+      "target": ["nsis", "portable"]
     },
     "linux": {
       "icon": "assets/ico.png",
-      "target": [ "AppImage", "deb", "rpm", "pacman", "snap", "apk"]
+      "target": ["AppImage", "deb", "rpm", "pacman", "snap", "apk"]
     },
     "nsis": {
       "oneClick": false,
@@ -41,11 +42,11 @@
     },
     "mac": {
       "icon": "assets/ico.icns",
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "target": ["dmg"]
     }
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "electron": ">=35.1.5",
     "electron-builder": ">=26.0.12"
