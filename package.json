@@ -3,7 +3,7 @@
   "productName": "OpenWebUISimpleDesktop",
   "version": "0.0.2",
   "description": "OpenWebUI-SimpleDesktop",
-  "author": "N1kozor",
+  "author": "N1kozor <test@test.net>",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -30,8 +30,8 @@
       "target": [ "nsis", "portable" ]
     },
     "linux": {
-      "icon": "assets/ico.ico",
-      "target": [ "AppImage", "deb", "rpm" ]
+      "icon": "assets/ico.png",
+      "target": [ "AppImage", "deb", "rpm", "pacman", "snap", "apk"]
     },
     "nsis": {
       "oneClick": false,
@@ -48,7 +48,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "electron": "^27.0.0",
-    "electron-builder": "^24.6.0"
+    "electron": ">=35.1.5",
+    "electron-builder": ">=26.0.12"
   }
 }
