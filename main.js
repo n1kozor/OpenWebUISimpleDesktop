@@ -26,7 +26,7 @@ function readConfig() {
 
 function getIconPath(cfg) {
     return process.platform === 'darwin'
-        ? path.join(__dirname, cfg?.iconDarwin ?? 'assets/icons.icns')
+        ? path.join(__dirname, cfg?.iconDarwin ?? 'assets/ico.icns')
         : path.join(__dirname, cfg?.iconWin ?? 'assets/ico.ico');
 }
 
