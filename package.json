@@ -18,7 +18,6 @@
       "modal-preload.js",
       "renderer.js",
       "index.html",
-      "modal.css",
       "styles/**/*",
       "assets/**/*"
     ],
