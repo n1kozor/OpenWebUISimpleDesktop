@@ -45,9 +45,9 @@ It provides a native desktop experience with native window controls and seamless
 ## Configuration
 
 All settings are stored in `config.json` under the user data directory:
-- Windows: `%AppData%\<AppName>\config.json`
-- macOS: `~/Library/Application Support/<AppName>/config.json`
-- Linux: `~/.config/<AppName>/config.json`
+- Windows: `%AppData%/config.json`
+- macOS: `~/Library/Application Support/config.json`
+- Linux: `~/.config/config.json`
 
 ### Example `config.json` content:
 
