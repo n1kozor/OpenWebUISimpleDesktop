@@ -78,7 +78,7 @@ function createModalWindow() {
     }
     modalWindow = new BrowserWindow({
         width: 400,
-        height: 420,
+        height: 330,
         resizable: false,
         alwaysOnTop: true,
         transparent: true,
