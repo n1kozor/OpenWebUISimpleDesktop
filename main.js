@@ -6,7 +6,7 @@ const os = require('os');
 const http = require('http');
 
 const isPackaged = app.isPackaged;
-const configDir = app.getPath('userData');
+const configDir = app.getPath('appData');
 const configPath = path.join(configDir, 'config.json');
 let mainWindow = null;
 let modalWindow = null;
@@ -49,6 +49,7 @@ function createMainWindow() {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
             webviewTag: true,
+            partition: 'persist:openwebui'
         }
     });
     const opacity = config?.opacity;
