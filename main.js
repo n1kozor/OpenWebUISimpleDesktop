@@ -49,6 +49,7 @@ function createMainWindow() {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
             webviewTag: true,
+            partition: 'persist:openwebui'
         }
     });
     const opacity = config?.opacity;
