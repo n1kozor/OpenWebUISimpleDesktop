@@ -22,18 +22,20 @@ body {
     min-height: 100vh;
 }
 
+html, body, .gpt-modal-wrap {
+    background: transparent !important;
+}
+
 .gpt-modal-wrap {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
 }
 
 .gpt-modal {
     background: var(--color-modal-bg);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
     max-width: 400px;
     width: 90vw;
     padding: 32px 28px 22px 28px;
