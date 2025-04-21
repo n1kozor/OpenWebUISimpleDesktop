@@ -1,7 +1,7 @@
 {
   "name": "openwebuisimpledesktop",
   "productName": "OpenWebUISimpleDesktop",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "OpenWebUI-SimpleDesktop",
   "author": "N1kozor <barkattila@gmail.com>",
   "main": "main.js",
